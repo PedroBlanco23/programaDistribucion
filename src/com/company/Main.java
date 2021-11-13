@@ -1,4 +1,4 @@
-package com.company;
+package  com.company;
 
 import TDA.Camino;
 import TDA.Grafo;
@@ -14,15 +14,13 @@ public class Main {
     public static void main(String[] args) throws IOException {
         GrafoTDA grafo = new Grafo();
         grafo.inicializarGrafo();
-        /*ExtraerUbicaciones extraerUbicaciones = new ExtraerUbicaciones("DatosClientes.txt", grafo);
+        ExtraerUbicaciones extraerUbicaciones = new ExtraerUbicaciones("DatosClientes.txt", grafo);
         extraerUbicaciones.cargarUbicaciones();
 
         ExtraerCaminos extraerCaminos = new ExtraerCaminos("Caminos.txt", grafo);
         extraerCaminos.cargarCaminos();
-        Camino camino = grafo.adyacentes("A").get(0);
-        System.out.println(camino.destino.horarioInicio);
-    */
-        grafo.agregarVertice("A", "", 0, 0);
+
+        /*grafo.agregarVertice("A", "", 0, 0);
         grafo.agregarVertice("B", "", 2, 2);
         grafo.agregarVertice("C", "", 2, 2);
         grafo.agregarVertice("D", "", 2, 2);
@@ -46,9 +44,14 @@ public class Main {
         nodoVivo.visitados.add(grafo.obtenerVertice("A"));
         nodoVivo.visitados.add(grafo.obtenerVertice("B"));
         nodoVivo.visitados.add(grafo.obtenerVertice("C"));
+        nodoVivo.kmParcial=3;*/
 
 
-
+        for(NodoGrafo nodoGrafo: grafo.vertices()) {
+            for(Camino camino : nodoGrafo.caminos){
+                System.out.println(camino.origen.cliente+ "->"+camino.destino.cliente + " " + camino.distanciaTotal+ "km " + camino.tiempoTotal + " mins" );
+            }
+        }
 
 
 
@@ -56,6 +59,10 @@ public class Main {
 
 
         AlgoritmoDistribucion algoritmoDistribucion = new AlgoritmoDistribucion(grafo);
-        System.out.println(algoritmoDistribucion.calcularCotaInferior(nodoVivo));
+        ArrayList<Camino> mejorCamino= algoritmoDistribucion.calcularRecorrido();
+        System.out.println(mejorCamino);
+        ImprimirPantalla.mostrarCamino(mejorCamino);
+
+
     }
 }

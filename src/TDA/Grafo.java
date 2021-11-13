@@ -31,19 +31,59 @@ public class Grafo implements GrafoTDA {
         Camino aux1 = new Camino();
         Camino aux2 = new Camino();
 
+        Camino mejorCamino = null;
 
-        aux1.distanciaTotal = distancia;
-        aux1.tiempoTotal = tiempo;
-        aux1.origen=n1;
-        aux1.destino=n2;
-        n1.caminos.add(aux1);
+        for(Camino camino:n1.caminos){
+            if(camino.destino==n2){
+                mejorCamino = camino;
+            }
+        }
 
 
-        aux2.distanciaTotal = distancia;
-        aux2.tiempoTotal = tiempo;
-        aux2.origen=n2;
-        aux2.destino=n1;
-        n2.caminos.add(aux2);
+
+        if(mejorCamino == null) {
+            aux1.distanciaTotal = distancia;
+            aux1.tiempoTotal = tiempo;
+            aux1.origen = n1;
+            aux1.destino = n2;
+            n1.caminos.add(aux1);
+
+
+            aux2.distanciaTotal = distancia;
+            aux2.tiempoTotal = tiempo;
+            aux2.origen = n2;
+            aux2.destino = n1;
+            n2.caminos.add(aux2);
+        } else if (mejorCamino.distanciaTotal>=distancia && mejorCamino.tiempoTotal>=tiempo) {
+
+            n1.caminos.remove(mejorCamino);
+
+            Camino mejorCaminoOtro = null;
+            for(Camino camino:n2.caminos){
+                if(camino.destino==n1){
+                    mejorCaminoOtro = camino;
+                }
+            }
+
+            n2.caminos.remove(mejorCaminoOtro);
+
+
+
+
+            aux1.distanciaTotal = distancia;
+            aux1.tiempoTotal = tiempo;
+            aux1.origen = n1;
+            aux1.destino = n2;
+            n1.caminos.add(aux1);
+
+            aux2.distanciaTotal = distancia;
+            aux2.tiempoTotal = tiempo;
+            aux2.origen = n2;
+            aux2.destino = n1;
+            n2.caminos.add(aux2);
+
+        }
+
 
     }
 
@@ -67,6 +107,7 @@ public class Grafo implements GrafoTDA {
     public NodoGrafo obtenerOrigen() {
         return nodos.get(0);
     }
+
 
 
     private NodoGrafo Vert2Nodo(String cliente) {
