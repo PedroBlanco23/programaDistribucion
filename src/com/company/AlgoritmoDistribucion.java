@@ -90,9 +90,6 @@ public class AlgoritmoDistribucion {
                     hijo.solucionParcial = new ArrayList<Camino>(nodoVivo.solucionParcial);
                     hijo.visitados = new ArrayList<NodoGrafo>(nodoVivo.visitados);
                     hijo.etapa = nodoVivo.etapa + 1;
-                    if (hijo.etapa ==14 ) {
-                        System.out.println();
-                    }
                     hijo.visitados.add(adyacente.destino);
                     hijo.solucionParcial.add(adyacente);
                     hijo.kmParcial = nodoVivo.kmParcial + adyacente.distanciaTotal;
