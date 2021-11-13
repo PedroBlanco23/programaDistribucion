@@ -17,7 +17,7 @@ public class AlgoritmoDistribucion {
     public AlgoritmoDistribucion(GrafoTDA grafo) {
         this.grafo = grafo;
         this.central = grafo.obtenerOrigen();
-        this.cotaGeneral = 140;
+        this.cotaGeneral = 200;
         this.central.horarioInicio=7*60;
     }
 
@@ -25,15 +25,17 @@ public class AlgoritmoDistribucion {
         ColaPrioridad cola = new ColaPrioridad();
         cola.inicializarColaPrioridad();
         NodoVivo raiz = crearRaiz();
-        cola.acolar(raiz, raiz.cotaInferior);
+        cola.acolar(raiz, raiz.etapa, raiz.cotaInferior);
         while (!cola.colaVacia()) {
+            System.out.println(cola.cant);
             NodoVivo candidato = cola.primero();
+            cola.desacolar();
             if (!podar(candidato, cotaGeneral)) {
                 ArrayList<NodoVivo> hijos = generarHijos(candidato);
                 for (NodoVivo hijo : hijos) {
                     if (!podar(hijo, cotaGeneral)) {
                         System.out.println(hijo.etapa);
-                        //System.out.println(hijo.cotaInferior);
+                        System.out.println(hijo.cotaInferior);
                         if (esSolucion(hijo)) {
                             hijo.solucionParcial.add(caminoAOrigen(hijo));
                             hijo.kmParcial+=hijo.solucionParcial.get(hijo.solucionParcial.size()-1).distanciaTotal;
@@ -43,7 +45,7 @@ public class AlgoritmoDistribucion {
                                 cotaGeneral = actualizarCota(hijo, cotaGeneral);
                             }
                         } else {
-                            cola.acolar(hijo, hijo.cotaInferior);
+                            cola.acolar(hijo, hijo.etapa, hijo.cotaInferior);
                         }
                     }
                 }
@@ -88,6 +90,9 @@ public class AlgoritmoDistribucion {
                     hijo.solucionParcial = new ArrayList<Camino>(nodoVivo.solucionParcial);
                     hijo.visitados = new ArrayList<NodoGrafo>(nodoVivo.visitados);
                     hijo.etapa = nodoVivo.etapa + 1;
+                    if (hijo.etapa ==14 ) {
+                        System.out.println();
+                    }
                     hijo.visitados.add(adyacente.destino);
                     hijo.solucionParcial.add(adyacente);
                     hijo.kmParcial = nodoVivo.kmParcial + adyacente.distanciaTotal;
@@ -118,9 +123,10 @@ public class AlgoritmoDistribucion {
         }
 
         float calculoPrim = prim(nodosNoVisitados);
-        if(calculoPrim==-1){
+        if(calculoPrim==-1 || (caminoAOrigen(nodoVivo) == null && nodoVivo.visitados.get(nodoVivo.visitados.size()-1) != central)) {
             return Float.MAX_VALUE;
-        } else {
+        } else if(calculoPrim==0 ) {
+            return (nodoVivo.kmParcial + caminoAOrigen(nodoVivo).distanciaTotal);
 
         }
 
