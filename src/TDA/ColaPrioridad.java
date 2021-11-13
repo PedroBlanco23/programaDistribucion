@@ -11,10 +11,11 @@ public class ColaPrioridad implements ColaPrioridadTDA {
     }
 
     NodoPrioridad mayorPrioridad;
-
+    public int cant;
     @Override
     public void inicializarColaPrioridad() {
         mayorPrioridad = null;
+        cant =0;
     }
 
     public void acolar(NodoVivo nodo, float cota) {
@@ -22,6 +23,7 @@ public class ColaPrioridad implements ColaPrioridadTDA {
         NodoPrioridad nuevo = new NodoPrioridad();
         nuevo.nodoVivo = nodo;
         nuevo.cota = cota;
+        cant+=1;
 
         // Si la cola esta vacia o el nuevo nodo tiene una menor cota, se lo agrega al principio
         if(mayorPrioridad == null || cota < mayorPrioridad.cota){

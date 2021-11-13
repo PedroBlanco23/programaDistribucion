@@ -28,13 +28,12 @@ public class AlgoritmoDistribucion {
         cola.acolar(raiz, raiz.cotaInferior);
         while (!cola.colaVacia()) {
             NodoVivo candidato = cola.primero();
-            cola.desacolar();
             if (!podar(candidato, cotaGeneral)) {
                 ArrayList<NodoVivo> hijos = generarHijos(candidato);
                 for (NodoVivo hijo : hijos) {
                     if (!podar(hijo, cotaGeneral)) {
                         System.out.println(hijo.etapa);
-                        System.out.println(hijo.cotaInferior);
+                        //System.out.println(hijo.cotaInferior);
                         if (esSolucion(hijo)) {
                             hijo.solucionParcial.add(caminoAOrigen(hijo));
                             hijo.kmParcial+=hijo.solucionParcial.get(hijo.solucionParcial.size()-1).distanciaTotal;
@@ -56,10 +55,26 @@ public class AlgoritmoDistribucion {
 
 
     public boolean llegaATiempo(NodoVivo origen, Camino camino) {
-        if ((origen.tiempoParcial + camino.tiempoTotal) > camino.destino.horarioFinal ||
-                (origen.tiempoParcial + camino.tiempoTotal) < camino.destino.horarioInicio) {
-            return false;
-        } else return true;
+        boolean correcto = true;
+        float tiempoConCamino = camino.tiempoTotal + origen.tiempoParcial;
+        if ((tiempoConCamino) > camino.destino.horarioFinal ||
+                (tiempoConCamino) < camino.destino.horarioInicio) {
+            correcto=false;
+        } else {
+            ArrayList<NodoGrafo> noVisitados = new ArrayList<NodoGrafo>(grafo.vertices());
+            noVisitados.remove(camino.destino);
+            for (NodoGrafo nodoGrafo: origen.visitados) {
+                noVisitados.remove(nodoGrafo);
+            }
+
+            for (NodoGrafo nodoGrafo: noVisitados) {
+                if(tiempoConCamino>nodoGrafo.horarioFinal){
+                    correcto =false;
+                }
+            }
+        }
+        return correcto;
+
     }
 
 
