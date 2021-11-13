@@ -28,6 +28,7 @@ public class AlgoritmoDistribucion {
         cola.acolar(raiz, raiz.cotaInferior);
         while (!cola.colaVacia()) {
             NodoVivo candidato = cola.primero();
+            cola.desacolar();
             if (!podar(candidato, cotaGeneral)) {
                 ArrayList<NodoVivo> hijos = generarHijos(candidato);
                 for (NodoVivo hijo : hijos) {
