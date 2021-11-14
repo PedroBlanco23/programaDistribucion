@@ -33,7 +33,6 @@ public class ExtraerUbicaciones {
 
             while(null!=line) {
                 String [] fields = fields = line.split(SEPARATOR);
-                System.out.println(Arrays.toString(fields));
                 grafo.agregarVertice(fields[0], fields[1], Integer.parseInt(fields[4])*60, Integer.parseInt(fields[5])*60);
                 line = br.readLine();
             }

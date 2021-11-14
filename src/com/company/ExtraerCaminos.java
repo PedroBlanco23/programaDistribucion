@@ -29,7 +29,6 @@ public class ExtraerCaminos {
             line = br.readLine();
             while(null!=line) {
                 String [] fields = line.split(SEPARATOR);
-                System.out.println(Arrays.toString(fields));
                 grafo.agregarCamino(Float.parseFloat(fields[3]), Float.parseFloat(fields[2]), fields[0], fields[1]);
                 line = br.readLine();
             }

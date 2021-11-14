@@ -17,9 +17,21 @@ public class AlgoritmoDistribucion {
     public AlgoritmoDistribucion(GrafoTDA grafo) {
         this.grafo = grafo;
         this.central = grafo.obtenerOrigen();
-        this.cotaGeneral = 200;
-        this.central.horarioInicio=7*60;
+        this.cotaGeneral = Float.MAX_VALUE;
+        this.central.horarioInicio= mejorHorarioInicio();
     }
+
+    public int mejorHorarioInicio() {
+        int mejorHorario = Integer.MAX_VALUE;
+        ArrayList<NodoGrafo> nodos = grafo.vertices();
+        for (NodoGrafo nodo : nodos) {
+            if(nodo.horarioInicio!=0 && nodo.horarioInicio<mejorHorario) {
+                mejorHorario= nodo.horarioInicio;
+            }
+        }
+        return mejorHorario;
+    }
+
 
     public ArrayList<Camino> calcularRecorrido() {
         ColaPrioridad cola = new ColaPrioridad();
@@ -27,15 +39,12 @@ public class AlgoritmoDistribucion {
         NodoVivo raiz = crearRaiz();
         cola.acolar(raiz, raiz.etapa, raiz.cotaInferior);
         while (!cola.colaVacia()) {
-            System.out.println(cola.cant);
             NodoVivo candidato = cola.primero();
             cola.desacolar();
             if (!podar(candidato, cotaGeneral)) {
                 ArrayList<NodoVivo> hijos = generarHijos(candidato);
                 for (NodoVivo hijo : hijos) {
                     if (!podar(hijo, cotaGeneral)) {
-                        System.out.println(hijo.etapa);
-                        System.out.println(hijo.cotaInferior);
                         if (esSolucion(hijo)) {
                             hijo.solucionParcial.add(caminoAOrigen(hijo));
                             hijo.kmParcial+=hijo.solucionParcial.get(hijo.solucionParcial.size()-1).distanciaTotal;
@@ -57,11 +66,10 @@ public class AlgoritmoDistribucion {
 
 
     public boolean llegaATiempo(NodoVivo origen) {
-        boolean correcto = true;
         if(origen.solucionParcial.size()==0) {
             return true;
         } else {
-
+            boolean correcto = true;
             Camino ultimoCamino = origen.solucionParcial.get(origen.solucionParcial.size()-1);
             if ((origen.tiempoParcial) > ultimoCamino.destino.horarioFinal ||
                     (origen.tiempoParcial) < ultimoCamino.destino.horarioInicio) {

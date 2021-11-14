@@ -47,11 +47,11 @@ public class Main {
         nodoVivo.kmParcial=3;*/
 
 
-        for(NodoGrafo nodoGrafo: grafo.vertices()) {
+        /*for(NodoGrafo nodoGrafo: grafo.vertices()) {
             for(Camino camino : nodoGrafo.caminos){
                 System.out.println(camino.origen.cliente+ "->"+camino.destino.cliente + " " + camino.distanciaTotal+ "km " + camino.tiempoTotal + " mins" );
             }
-        }
+        }*/
 
 
 
@@ -59,7 +59,10 @@ public class Main {
 
 
         AlgoritmoDistribucion algoritmoDistribucion = new AlgoritmoDistribucion(grafo);
+        ImprimirPantalla.imprimirHorarios(grafo);
+
         ArrayList<Camino> mejorCamino= algoritmoDistribucion.calcularRecorrido();
+
         System.out.println(mejorCamino);
         ImprimirPantalla.mostrarCamino(mejorCamino);
 
