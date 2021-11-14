@@ -267,29 +267,6 @@ public class AlgoritmoDistribucion {
             return (nodo.kmParcial < mejorSolucion.kmParcial);
         }
     }
-
-    public ArrayList<Camino> greedy () {
-        ArrayList<NodoGrafo> sinVisitar = grafo.vertices();
-        ArrayList<Camino> recorrido  = new ArrayList<Camino>();
-        NodoGrafo aux = sinVisitar.get(0);
-        Camino mejorCamino;
-        while(sinVisitar.size()>1) {
-            mejorCamino = menorCamino(aux, sinVisitar);
-            recorrido.add(mejorCamino);
-            sinVisitar.remove(aux);
-            aux = mejorCamino.destino;
-        }
-        for(Camino auxCamino: aux.caminos) {
-            if (auxCamino.destino==grafo.obtenerOrigen()) {
-                recorrido.add(auxCamino);
-            }
-        }
-
-        return recorrido;
-
-    }
-
-
-
+    
 
 }

@@ -14,7 +14,7 @@ public class ImprimirPantalla {
         for(Camino camino:recorrido){
             total=total + camino.distanciaTotal;
             totalTiempo = totalTiempo + camino.tiempoTotal;
-            System.out.println(camino.origen.nombre + "-"+ camino.distanciaTotal +"km-> " + camino.destino.nombre + " " + Math.round(totalTiempo /60) + ":" + totalTiempo%60);
+            System.out.println(camino.origen.nombre + "-"+ camino.distanciaTotal +"km-> " + camino.destino.nombre + " " + (int) totalTiempo /60 + ":" + (int) totalTiempo%60 );
         }
         System.out.println();
         System.out.println(total);

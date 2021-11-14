@@ -47,11 +47,11 @@ public class Main {
         nodoVivo.kmParcial=3;*/
 
 
-        /*for(NodoGrafo nodoGrafo: grafo.vertices()) {
+        for(NodoGrafo nodoGrafo: grafo.vertices()) {
             for(Camino camino : nodoGrafo.caminos){
-                System.out.println(camino.origen.cliente+ "->"+camino.destino.cliente + " " + camino.distanciaTotal+ "km " + camino.tiempoTotal + " mins" );
+                System.out.println(camino.origen.nombre+ "->"+camino.destino.nombre+ " " + camino.distanciaTotal+ "km " + camino.tiempoTotal + " mins" );
             }
-        }*/
+        }
 
 
 
