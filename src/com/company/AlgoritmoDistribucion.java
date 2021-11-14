@@ -56,26 +56,31 @@ public class AlgoritmoDistribucion {
     }
 
 
-    public boolean llegaATiempo(NodoVivo origen, Camino camino) {
+    public boolean llegaATiempo(NodoVivo origen) {
         boolean correcto = true;
-        float tiempoConCamino = camino.tiempoTotal + origen.tiempoParcial;
-        if ((tiempoConCamino) > camino.destino.horarioFinal ||
-                (tiempoConCamino) < camino.destino.horarioInicio) {
-            correcto=false;
+        if(origen.solucionParcial.size()==) {
+            return true;
         } else {
-            ArrayList<NodoGrafo> noVisitados = new ArrayList<NodoGrafo>(grafo.vertices());
-            noVisitados.remove(camino.destino);
-            for (NodoGrafo nodoGrafo: origen.visitados) {
-                noVisitados.remove(nodoGrafo);
-            }
 
-            for (NodoGrafo nodoGrafo: noVisitados) {
-                if(tiempoConCamino>nodoGrafo.horarioFinal){
-                    correcto =false;
+            Camino ultimoCamino = origen.solucionParcial.get(origen.solucionParcial.size()-1);
+            if ((origen.tiempoParcial) > ultimoCamino.destino.horarioFinal ||
+                    (origen.tiempoParcial) < ultimoCamino.destino.horarioInicio) {
+                correcto=false;
+            } else {
+                ArrayList<NodoGrafo> noVisitados = new ArrayList<NodoGrafo>(grafo.vertices());
+                for (NodoGrafo nodoGrafo: origen.visitados) {
+                    noVisitados.remove(nodoGrafo);
+                }
+
+                for (NodoGrafo nodoGrafo: noVisitados) {
+                    if(origen.tiempoParcial>nodoGrafo.horarioFinal){
+                        correcto =false;
+                    }
                 }
             }
+            return correcto;
         }
-        return correcto;
+
 
     }
 
@@ -84,7 +89,6 @@ public class AlgoritmoDistribucion {
         ArrayList<NodoVivo> hijos = new ArrayList<NodoVivo>();
         ArrayList<Camino> caminosAdyacentes = nodoVivo.visitados.get(nodoVivo.visitados.size()-1).caminos;
         for(Camino adyacente: caminosAdyacentes) {
-            if(llegaATiempo(nodoVivo, adyacente)) {
                 if(!nodoVivo.visitados.contains(adyacente.destino)) {
                     NodoVivo hijo = new NodoVivo();
                     hijo.solucionParcial = new ArrayList<Camino>(nodoVivo.solucionParcial);
@@ -96,7 +100,6 @@ public class AlgoritmoDistribucion {
                     hijo.tiempoParcial = nodoVivo.tiempoParcial + adyacente.tiempoTotal;
                     hijo.cotaInferior = calcularCotaInferior(hijo);
                     hijos.add(hijo);
-                }
             }
         }
         return hijos;
@@ -192,7 +195,12 @@ public class AlgoritmoDistribucion {
 
 
     public boolean podar(NodoVivo nodo, float cota) {
-        return (nodo.cotaInferior>cota);
+        if (llegaATiempo(nodo)) {
+            return (nodo.cotaInferior>cota);
+        } else {
+            return true;
+        }
+
     }
 
     public float actualizarCota(NodoVivo nodo, float cota) {
