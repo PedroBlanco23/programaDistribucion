@@ -58,7 +58,7 @@ public class AlgoritmoDistribucion {
 
     public boolean llegaATiempo(NodoVivo origen) {
         boolean correcto = true;
-        if(origen.solucionParcial.size()==) {
+        if(origen.solucionParcial.size()==0) {
             return true;
         } else {
 
