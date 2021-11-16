@@ -61,7 +61,7 @@ public class ImprimirPantalla {
         }
         System.out.println();
         System.out.println("Kilometros total recorridos: "+(double) Math.round(total*100)/100 + "kms");
-        System.out.println("Tiempo total empleado: " + (double) Math.round(totalTiempo*100)/100 + " horas");
+        System.out.println("Tiempo total empleado: " + (int) Math.round(totalTiempo*100)/100 + ":"+ Math.round((totalTiempo*60)%60));
     }
 
     public static void imprimirHorarios (GrafoTDA grafo) {
