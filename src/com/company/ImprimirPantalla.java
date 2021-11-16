@@ -67,7 +67,13 @@ public class ImprimirPantalla {
     public static void imprimirHorarios (GrafoTDA grafo) {
         ArrayList<NodoGrafo> nodos = grafo.vertices();
         for (NodoGrafo nodo : nodos) {
-            System.out.println(nodo.nombre + " " + nodo.horarioInicio/60 + ":" + nodo.horarioInicio%60 + "-" + nodo.horarioFinal/60 + ":" + nodo.horarioFinal%60);
+            if(nodo.horarioFinal%60>9) {
+                System.out.println(nodo.nombre + " " + nodo.horarioInicio/60 + ":" + nodo.horarioInicio%60 + "-" + nodo.horarioFinal/60 + ":" + nodo.horarioFinal%60);
+            } else {
+                System.out.println(nodo.nombre + " " + nodo.horarioInicio/60 + ":" + nodo.horarioInicio%60 + "-" + nodo.horarioFinal/60 + ":" + nodo.horarioFinal%60 + "0");
+
+            }
+
         }
     }
 

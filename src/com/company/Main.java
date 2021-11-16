@@ -16,7 +16,6 @@ public class Main {
         grafo.inicializarGrafo();
         ExtraerUbicaciones extraerUbicaciones = new ExtraerUbicaciones("DatosClientes.txt", grafo);
         extraerUbicaciones.cargarUbicaciones();
-
         ExtraerCaminos extraerCaminos = new ExtraerCaminos("Caminos.txt", grafo);
         extraerCaminos.cargarCaminos();
 
