@@ -22,10 +22,10 @@ public class AlgoritmoDistribucion {
     }
 
     public int mejorHorarioInicio() {
-        int mejorHorario = Integer.MAX_VALUE;
+        int mejorHorario =0;
         ArrayList<NodoGrafo> nodos = grafo.vertices();
         for (NodoGrafo nodo : nodos) {
-            if(nodo.horarioInicio!=0 && nodo.horarioInicio<mejorHorario) {
+            if(nodo.horarioInicio!=0 && nodo.horarioInicio>mejorHorario) {
                 mejorHorario= nodo.horarioInicio;
             }
         }
@@ -159,10 +159,12 @@ public class AlgoritmoDistribucion {
     }
 
     public Camino menorCamino(NodoGrafo nodoGrafo, ArrayList<NodoGrafo> nodosNoVisitados) {
-       Camino menor = new Camino();
-       menor.distanciaTotal = Float.MAX_VALUE;
+       Camino menor = null;
         for (Camino camino : nodoGrafo.caminos) {
             if (nodosNoVisitados.contains(camino.destino)) {
+                if (menor ==null) {
+                    menor = camino;
+                }
                 if (camino.distanciaTotal< menor.distanciaTotal) {
                     menor = camino;
                 }
