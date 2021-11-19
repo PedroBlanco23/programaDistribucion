@@ -30,18 +30,23 @@ public class Grafo implements GrafoTDA {
         NodoGrafo n2 = Vert2Nodo(lugar2);
         Camino aux1 = new Camino();
         Camino aux2 = new Camino();
-
-        Camino mejorCamino = null;
-
+        //Si hay un camino peor en tiempo y distancia lo quita del grafo
+        ArrayList<Camino> caminosPeores = new ArrayList<Camino>();
+        boolean hayMejor = false;
         for(Camino camino:n1.caminos){
             if(camino.destino==n2){
-                mejorCamino = camino;
+                if(camino.distanciaTotal>=distancia && camino.tiempoTotal>=tiempo) {
+                    caminosPeores.add(camino);
+                } else if(camino.distanciaTotal<=distancia && camino.tiempoTotal<=tiempo) {
+                    hayMejor = true;
+                }
+
             }
         }
 
 
 
-        if(mejorCamino == null) {
+        if(!hayMejor) {
             aux1.distanciaTotal = distancia;
             aux1.tiempoTotal = tiempo;
             aux1.origen = n1;
@@ -54,33 +59,22 @@ public class Grafo implements GrafoTDA {
             aux2.origen = n2;
             aux2.destino = n1;
             n2.caminos.add(aux2);
-        } else if (mejorCamino.distanciaTotal>=distancia && mejorCamino.tiempoTotal>=tiempo) {
+        }
+        if (caminosPeores.size()>0) {
 
-            n1.caminos.remove(mejorCamino);
 
-            Camino mejorCaminoOtro = null;
-            for(Camino camino:n2.caminos){
-                if(camino.destino==n1){
-                    mejorCaminoOtro = camino;
+            for(Camino c1 : caminosPeores) {
+                Camino c2 = null;
+                for(Camino camino:n2.caminos){
+                    if(camino.destino==n1 && camino.distanciaTotal ==c1.distanciaTotal && camino.tiempoTotal == c1.tiempoTotal){
+                       c2= camino;
+                    }
                 }
+                n1.caminos.remove(c1);
+                n2.caminos.remove(c2);
+
+
             }
-
-            n2.caminos.remove(mejorCaminoOtro);
-
-
-
-
-            aux1.distanciaTotal = distancia;
-            aux1.tiempoTotal = tiempo;
-            aux1.origen = n1;
-            aux1.destino = n2;
-            n1.caminos.add(aux1);
-
-            aux2.distanciaTotal = distancia;
-            aux2.tiempoTotal = tiempo;
-            aux2.origen = n2;
-            aux2.destino = n1;
-            n2.caminos.add(aux2);
 
         }
 

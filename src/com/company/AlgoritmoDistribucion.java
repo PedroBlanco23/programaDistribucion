@@ -253,7 +253,6 @@ public class AlgoritmoDistribucion {
 
     public void agregarCaminos(NodoGrafo nodoGrafo, ArrayList<Camino> caminosDisponibles) {
         for(Camino camino : nodoGrafo.caminos) {
-            //CUIDADO CON ORIGEN Y DESTINO DE CAMINO QUE CUENTE LOS INVERSOS
             caminosDisponibles.add(camino);
         }
 
