@@ -131,14 +131,20 @@ public class AlgoritmoDistribucion {
         }
 
         float calculoPrim = prim(nodosNoVisitados);
-        if(calculoPrim==-1 || (caminoAOrigen(nodoVivo) == null && nodoVivo.visitados.get(nodoVivo.visitados.size()-1) != central)) {
+        if(calculoPrim==-1 || (caminoAOrigen(nodoVivo) == null && nodoVivo.visitados.get(nodoVivo.visitados.size()-1) != central && nodoVivo.visitados.size()== grafo.vertices().size()-1)) {
             return Float.MAX_VALUE;
         } else if(calculoPrim==0 ) {
             return (nodoVivo.kmParcial + caminoAOrigen(nodoVivo).distanciaTotal);
 
+        } else  {
+            Camino caminoInicio =  menorCamino(nodoInicio, nodosNoVisitados);
+            Camino caminoFin = menorCamino(nodoUltimo, nodosNoVisitados);
+            if(caminoFin !=null && caminoInicio != null) {
+                return nodoVivo.kmParcial + calculoPrim + caminoInicio.distanciaTotal + caminoFin.distanciaTotal;
+            } else {
+                return Float.MAX_VALUE;
+            }
         }
-
-        return nodoVivo.kmParcial + calculoPrim + menorCamino(nodoInicio, nodosNoVisitados).distanciaTotal + menorCamino(nodoUltimo, nodosNoVisitados).distanciaTotal;
     }
 
     public Camino caminoAOrigen(NodoVivo nodoVivo) {
