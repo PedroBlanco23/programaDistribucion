@@ -131,7 +131,7 @@ public class AlgoritmoDistribucion {
         }
 
         float calculoPrim = prim(nodosNoVisitados);
-        if(calculoPrim==-1 || (caminoAOrigen(nodoVivo) == null && nodoVivo.visitados.get(nodoVivo.visitados.size()-1) != central && nodoVivo.visitados.size()== grafo.vertices().size()-1)) {
+        if(calculoPrim==-1 || (caminoAOrigen(nodoVivo) == null &&  nodoVivo.visitados.size()== grafo.vertices().size()-1)) {
             return Float.MAX_VALUE;
         } else if(calculoPrim==0 ) {
             return (nodoVivo.kmParcial + caminoAOrigen(nodoVivo).distanciaTotal);
